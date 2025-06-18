@@ -1,0 +1,7 @@
+Ao instalar, tenha instalado o composer caso queira rodar a aplicação e baixe esses pacotes, vou deixar o nome do pacote
+
+composer install dompdf/dompdf
+
+ou
+
+composer require dompdf
