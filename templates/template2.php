@@ -9,13 +9,13 @@
             font-family: 'Arial', sans-serif;
             max-width: 800px;
             margin: 0 auto;
-            background-color: #f4f6f9;
-            color: #333;
+            /* background-color: #1f1f13; */
+            color: #333333;
             line-height: 1.6;
         }
         
         .header { 
-            background: linear-gradient(135deg, #28a745, #20c997);
+            background-color: #151515;
             color: white;
             padding: 30px 20px;
             text-align: center;
@@ -39,7 +39,7 @@
             padding: 25px;
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-left: 5px solid #28a745;
+            border-left: 5px solid #666666;
         }
         
         .section:last-child {
@@ -48,7 +48,7 @@
         
         .section-title { 
             font-size: 22px;
-            color: #28a745;
+            color: #131313;
             border-bottom: 2px solid #e9ecef;
             padding-bottom: 10px;
             margin-bottom: 15px;

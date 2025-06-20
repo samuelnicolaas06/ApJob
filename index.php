@@ -7,8 +7,9 @@ $data = [];
 $generated = false;
 $selected_template = null;
 
-// Processa o formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    error_log("POST recebido: " . print_r($_POST, true));
+    
     $data = [
         'name' => htmlspecialchars($_POST['name'] ?? ''),
         'email' => htmlspecialchars($_POST['email'] ?? ''),
@@ -24,10 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selected_template = $_POST['template'] ?? null;
     $generated = $selected_template !== null;
 
-    // Gera PDF se solicitado
     if (isset($_POST['generate_pdf']) && $selected_template) {
-        $resumeGenerator->generatePDF($data, $selected_template);
-        exit;
+        error_log("Tentando gerar PDF com template: $selected_template");
+        try {
+            $resumeGenerator->generatePDF($data, $selected_template);
+            exit;
+        } catch (Exception $e) {
+            error_log("Erro no generatePDF: " . $e->getMessage());
+            echo "Erro ao gerar PDF: " . htmlspecialchars($e->getMessage());
+            exit;
+        }
+    } else {
+        error_log("generate_pdf não definido ou template ausente");
     }
 }
 ?>
@@ -47,10 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-12">
                 <h1 class="mb-4 text-center">Gerador de Currículo</h1>
                 
-                <!-- Formulário -->
                 <?php include 'includes/form.php'; ?>
                 
-                <!-- Pré-visualização -->
                 <?php if ($generated): ?>
                     <div class="mt-5">
                         <h2 class="mb-4">Pré-visualização do Currículo</h2>

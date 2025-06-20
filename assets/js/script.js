@@ -1,9 +1,10 @@
-// JavaScript para o gerador de currículo
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('resumeForm');
+    const resumeForm = document.getElementById('resumeForm');
+    const pdfForm = document.getElementById('pdfForm');
     const generateButton = document.getElementById('generateButton');
     const downloadButton = document.getElementById('downloadButton');
     const templateRadios = document.querySelectorAll('input[name="template"]');
+    const formFields = ['name', 'email', 'phone', 'address', 'objective', 'education', 'experience', 'skills', 'languages'];
     
     // Função para verificar se um template foi selecionado
     function checkTemplateSelection() {
@@ -11,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
         generateButton.disabled = !isSelected;
         downloadButton.disabled = !isSelected;
         
-        // Adiciona classe visual aos botões
         if (isSelected) {
             generateButton.classList.remove('btn-secondary');
             generateButton.classList.add('btn-primary');
@@ -25,15 +25,44 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Sincroniza os campos do pdfForm com o resumeForm
+    function syncPdfForm() {
+        formFields.forEach(field => {
+            const resumeField = document.getElementById(field);
+            const pdfField = pdfForm.querySelector(`input[name="${field}"]`);
+            if (resumeField && pdfField) {
+                pdfField.value = resumeField.value;
+            }
+        });
+        
+        const selectedTemplate = document.querySelector('input[name="template"]:checked');
+        const pdfTemplateField = pdfForm.querySelector('input[name="template"]');
+        if (selectedTemplate && pdfTemplateField) {
+            pdfTemplateField.value = selectedTemplate.value;
+        }
+    }
+    
     // Event listeners para os radio buttons
     templateRadios.forEach(radio => {
-        radio.addEventListener('change', checkTemplateSelection);
+        radio.addEventListener('change', () => {
+            checkTemplateSelection();
+            syncPdfForm();
+        });
+    });
+    
+    // Sincroniza campos de texto em tempo real
+    formFields.forEach(field => {
+        const element = document.getElementById(field);
+        if (element) {
+            element.addEventListener('input', syncPdfForm);
+        }
     });
     
     // Verificação inicial
     checkTemplateSelection();
+    syncPdfForm();
     
-    // Validação do formulário
+    // Validação do formulário de pré-visualização
     function validateForm() {
         const name = document.getElementById('name').value.trim();
         const email = document.getElementById('email').value.trim();
@@ -59,23 +88,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Função para mostrar alertas
     function showAlert(message, type = 'info') {
-        // Remove alertas existentes
         const existingAlerts = document.querySelectorAll('.alert');
         existingAlerts.forEach(alert => alert.remove());
         
-        // Cria novo alerta
         const alertDiv = document.createElement('div');
         alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
         alertDiv.innerHTML = `
             ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         `;
         
-        // Insere o alerta no topo do container
         const container = document.querySelector('.container');
         container.insertBefore(alertDiv, container.firstChild);
         
-        // Remove automaticamente após 5 segundos
         setTimeout(() => {
             if (alertDiv.parentNode) {
                 alertDiv.remove();
@@ -83,27 +108,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
     
-    // Event listener para o formulário
-    form.addEventListener('submit', function(e) {
-        // Só valida se não for geração de PDF
-        if (!e.submitter || e.submitter.name !== 'generate_pdf') {
-            if (!validateForm()) {
-                e.preventDefault();
-                return false;
-            }
+    // Event listener para o formulário de pré-visualização
+    resumeForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (!validateForm()) {
+            return false;
         }
-        
-        // Adiciona loading state aos botões
-        if (e.submitter) {
-            e.submitter.classList.add('loading');
-            e.submitter.disabled = true;
-        }
+        console.log('Enviando formulário de pré-visualização');
+        syncPdfForm(); // Garante que pdfForm está atualizado
+        this.submit();
     });
     
-    // Auto-save dos dados do formulário no sessionStorage
-    const formFields = ['name', 'email', 'phone', 'address', 'objective', 'education', 'experience', 'skills', 'languages'];
+    // Event listener para o formulário de PDF
+    if (pdfForm) {
+        pdfForm.addEventListener('submit', function(e) {
+            console.log('Enviando formulário de PDF', new FormData(this));
+            downloadButton.classList.add('loading');
+            downloadButton.disabled = true;
+        });
+    }
     
-    // Carrega dados salvos
+    // Auto-save dos dados do formulário no sessionStorage
     function loadSavedData() {
         formFields.forEach(field => {
             const savedValue = sessionStorage.getItem(`resume_${field}`);
@@ -115,43 +140,41 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Carrega template selecionado
         const savedTemplate = sessionStorage.getItem('resume_template');
         if (savedTemplate) {
             const templateRadio = document.getElementById(savedTemplate);
             if (templateRadio) {
                 templateRadio.checked = true;
                 checkTemplateSelection();
+                syncPdfForm();
             }
         }
     }
     
-    // Salva dados automaticamente
     function autoSave() {
         formFields.forEach(field => {
             const element = document.getElementById(field);
             if (element) {
                 element.addEventListener('input', function() {
                     sessionStorage.setItem(`resume_${field}`, this.value);
+                    syncPdfForm();
                 });
             }
         });
         
-        // Salva template selecionado
         templateRadios.forEach(radio => {
             radio.addEventListener('change', function() {
                 if (this.checked) {
                     sessionStorage.setItem('resume_template', this.value);
+                    syncPdfForm();
                 }
             });
         });
     }
     
-    // Inicializa auto-save
     loadSavedData();
     autoSave();
     
-    // Função para limpar dados salvos
     window.clearSavedData = function() {
         if (confirm('Tem certeza que deseja limpar todos os dados salvos?')) {
             formFields.forEach(field => {
@@ -162,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // Adiciona contador de caracteres para textareas
     const textareas = document.querySelectorAll('textarea');
     textareas.forEach(textarea => {
         const maxLength = textarea.getAttribute('maxlength');
@@ -184,7 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Smooth scroll para seções
     const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
     smoothScrollLinks.forEach(link => {
         link.addEventListener('click', function(e) {
@@ -199,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Adiciona tooltips do Bootstrap se disponível
     if (typeof bootstrap !== 'undefined') {
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         tooltipTriggerList.map(function (tooltipTriggerEl) {

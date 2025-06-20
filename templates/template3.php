@@ -7,30 +7,31 @@
         /* Estilos gerais */
         body { 
             font-family: 'Arial', sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #f8f9fa;
+            max-width: 850px;
+            /* margin: 0 auto; */
             color: #333;
-            line-height: 1.6;
+            /* line-height: 1.6; */
         }
         
         .container { 
-            display: flex;
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
         
         .sidebar { 
-            background: linear-gradient(180deg, #333333, #151510);
+            /* background: linear-gradient(180deg, #333333, #151510); */
+            background-color: #151510;
             color: white;
-            width: 35%;
+            width: 300px;
+            float: left;
             padding: 30px 20px;
             box-sizing: border-box;
+            border-radius: 30px;
+            overflow: auto; /* Permite rolagem se o conteúdo for grande */
+            position: relative; /* Mantém no lugar */
         }
         
         .sidebar h3 { 
             font-size: 24px;
-            margin: 0 0 20px;
+            /*margin: 0 0 20px;*/
             font-weight: 300;
             text-align: center;
             border-bottom: 2px solid rgba(255,255,255,0.3);
@@ -42,13 +43,13 @@
         }
         
         .sidebar .contact-info p {
-            margin: 8px 0;
+            /*margin: 8px 0;*/
             font-size: 14px;
         }
         
         .sidebar h4 { 
             font-size: 18px;
-            margin: 25px 0 10px;
+            /*margin: 25px 0 10px;*/
             color: #fff;
             border-bottom: 1px solid rgba(255,255,255,0.3);
             padding-bottom: 5px;
@@ -61,22 +62,29 @@
         }
         
         .content { 
-            width: 65%;
-            padding: 30px 25px;
+            /* width: 65%; */
+            width: calc(100% - 300px);
+            min-height: 100%;
+            float: left; /* Match sidebar float */
+            /*padding: 30px 25px;*/
             background-color: white;
         }
         
         .content .section { 
+            /*background-color: #f8f9fa;*/
+            /*padding: 20px;*/
             background-color: #f8f9fa;
-            padding: 20px;
             margin-bottom: 20px;
+            margin: 20px 0 0 20px;
+            padding: 15px;
             border-radius: 8px;
+            page-break-inside: avoid;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .content h4 { 
             font-size: 20px;
-            color: #17a2b8;
+            color: #151510;
             border-bottom: 2px dashed #17a2b8;
             margin-bottom: 15px;
             padding-bottom: 8px;
@@ -84,7 +92,7 @@
         
         .content p {
             font-size: 15px;
-            margin: 10px 0;
+            /*margin: 10px 0;*/
             text-align: justify;
         }
     </style>

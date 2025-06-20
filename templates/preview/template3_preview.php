@@ -48,7 +48,7 @@
     <div style="width: 65%; padding: 30px 25px; background-color: white;">
         <?php if (!empty($objective)): ?>
         <div style="background-color: #f8f9fa; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            <h4 style="font-size: 20px; color: #17a2b8; border-bottom: 2px dashed #17a2b8; margin-bottom: 15px; padding-bottom: 8px;">
+            <h4 style="font-size: 20px; color: #151510; border-bottom: 2px dashed #17a2b8; margin-bottom: 15px; padding-bottom: 8px;">
                 Sobre Mim
             </h4>
             <p style="font-size: 15px; margin: 10px 0; text-align: justify; line-height: 1.6;">
@@ -59,7 +59,7 @@
         
         <?php if (!empty($experience)): ?>
         <div style="background-color: #f8f9fa; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            <h4 style="font-size: 20px; color: #17a2b8; border-bottom: 2px dashed #17a2b8; margin-bottom: 15px; padding-bottom: 8px;">
+            <h4 style="font-size: 20px; color: #151510; border-bottom: 2px dashed #17a2b8; margin-bottom: 15px; padding-bottom: 8px;">
                 Experiência Profissional
             </h4>
             <p style="font-size: 15px; margin: 10px 0; text-align: justify; line-height: 1.6;">
@@ -70,7 +70,7 @@
         
         <?php if (!empty($education)): ?>
         <div style="background-color: #f8f9fa; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            <h4 style="font-size: 20px; color: #17a2b8; border-bottom: 2px dashed #17a2b8; margin-bottom: 15px; padding-bottom: 8px;">
+            <h4 style="font-size: 20px; color: #151510; border-bottom: 2px dashed #17a2b8; margin-bottom: 15px; padding-bottom: 8px;">
                 Formação Acadêmica
             </h4>
             <p style="font-size: 15px; margin: 10px 0; text-align: justify; line-height: 1.6;">
