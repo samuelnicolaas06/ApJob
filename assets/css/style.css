@@ -3,19 +3,74 @@
 /* Layout geral */
 body {
     background-color: #f8f9fa;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Outfit', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container {
     max-width: 1200px;
 }
-
-/* Cabeçalho */
-h1 {
-    color: #2c3e50;
-    font-weight: 300;
-    margin-bottom: 2rem;
+.Main {
+  width: 100%;
+  min-height: 100vh; /* Ocupa toda a altura da tela */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Pode usar center se quiser centralizar o texto também */
+  padding: 10% 5%;
+  background: 
+    radial-gradient(at 20% 20%, rgba(0, 180, 255, 0.4), transparent 60%),
+    radial-gradient(at 80% 80%, rgba(0, 90, 255, 0.3), transparent 50%),
+    linear-gradient(to bottom, #000428, #004e92);
+  background-blend-mode: screen;
+  color: white;
+  text-align: left;
 }
+
+
+
+/* Títulos dentro da Main */
+.Main h1 {
+  font-size: 4rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+.Main h2 {
+  font-size: 1.25rem;
+  font-weight: 200;
+  max-width: 600px;
+}
+
+/* Botão */
+.Main .btn {
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.25rem;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .Main {
+    align-items: center;
+    padding: 20% 5%;
+    text-align: center;
+  }
+
+  .Main h1 {
+    font-size: 2.5rem;
+  }
+
+  .Main h2 {
+    font-size: 1rem;
+  }
+
+  .Main .btn {
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
 
 /* Cards do formulário */
 .card {

@@ -49,12 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Gerador de Currículo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="Main">
+        <h1>Gerador de Currículo</h1>
+        <h2>Está em busca do emprego dos seus sonhos? 
+            <p>Nosso gerador de currículos online é rápido, fácil de usar e totalmente gratuito.</h2>
+        <button onclick="document.getElementById('sobre').scrollIntoView({ behavior: 'smooth' })" type="submit" class="btn btn-success btn-lg">Iniciar</button>
+    </div>
+    
+    <div class="container mt-5" id="sobre">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="mb-4 text-center">Gerador de Currículo</h1>
+                
                 
                 <?php include 'includes/form.php'; ?>
                 
